@@ -1,0 +1,11 @@
+version: '2'
+services:
+
+  skin_detector:
+    image: skin_detector
+    ports:
+      - "8080:8080"
+    build:
+      context: ./SkinDetector
+    volumes:
+      - ./SkinDetector:/app
