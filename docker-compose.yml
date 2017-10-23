@@ -1,11 +1,11 @@
 version: '2'
 services:
 
-  skin_detector:
-    image: skin_detector
+  images_api:
+    image: images_api
     ports:
       - "8080:8080"
     build:
-      context: ./SkinDetector
+      context: ./images-api
     volumes:
-      - ./SkinDetector:/app
+      - ./images-api:/app

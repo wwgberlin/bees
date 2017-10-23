@@ -1,5 +1,5 @@
 import cv2
-import skin_detector
+from SkinDetector import skin_detector
 import face_detector
 import json
 

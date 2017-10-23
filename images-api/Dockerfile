@@ -7,5 +7,5 @@ ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 WORKDIR /app
 ADD . /app
-CMD export FLASK_APP=test.py && flask run
+CMD export FLASK_APP=api.py && flask run
 EXPOSE 8080
