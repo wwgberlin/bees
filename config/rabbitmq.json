@@ -1,0 +1,6 @@
+{
+  "User": "rabbitmq",
+  "Password": "rabbitmq",
+  "Host": "rabbit",
+  "Port": "5672"
+}

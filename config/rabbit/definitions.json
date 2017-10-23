@@ -1,0 +1,63 @@
+{
+  "rabbit_version": "3.6.12",
+  "users": [
+    {
+      "name": "rabbitmq",
+      "password_hash": "Iqsp3Z7tMGpsK8mY6M4DBgjaipIZ6SMcnbUQWiUUTfpA6SLX",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "rabbitmq",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [],
+  "global_parameters": [
+    {
+      "name": "cluster_name",
+      "value": "rabbit@rabbit"
+    }
+  ],
+  "policies": [],
+  "queues": [
+    {
+      "name": "images",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "images",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "images",
+      "vhost": "/",
+      "destination": "images",
+      "destination_type": "queue",
+      "routing_key": "",
+      "arguments": {}
+    }
+  ]
+}

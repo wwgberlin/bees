@@ -1,11 +1,33 @@
 version: '2'
 services:
 
-  images_api:
-    image: images_api
+  rabbit:
+    image: rabbitmq:3.6.5-management
+    volumes:
+      - ./config/rabbit/definitions.json:/opt/definitions.json:ro
+      - ./config/rabbit/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  cv_api:
+    image: cv_api
     ports:
       - "8080:8080"
     build:
-      context: ./images-api
+      context: ./cv-api
     volumes:
-      - ./images-api:/app
+      - ./cv-api:/app
+
+  files_server:
+    image: files_server
+    ports:
+      - "8081:8080"
+    build:
+      context: ./files-server
+    volumes:
+      - .:/go/src/github.com/wwgberlin/bubble
+    depends_on:
+      - rabbit
+    links:
+      - rabbit
