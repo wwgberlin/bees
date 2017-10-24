@@ -67,12 +67,20 @@ func getAmqpChannel(url string) (*amqp.Channel, error) {
 		err error
 	)
 
-	if c, err = amqp.Dial(url); err == nil {
-		if ch, err = c.Channel(); err != nil {
-			c.Close()
+	var conn bool
+	for i := 0; i < 10; i++ {
+		if c, err = amqp.Dial(url); err == nil {
+			conn = true
+			if ch, err = c.Channel(); err != nil {
+				c.Close()
+			}
+		} else {
+			fmt.Println("[AMPQ] attempting to re-connect to amqp server. Error:", err)
+			time.Sleep(time.Second * 10)
 		}
-	} else {
-		panic(fmt.Sprintf("[AMPQ] attempting to re-connect to amqp server. Error: %s", err))
+	}
+	if !conn {
+		panic("[AMPQ] giving up connecting to amqp server.")
 	}
 
 	return ch, err

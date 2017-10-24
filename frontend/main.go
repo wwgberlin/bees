@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/wwgberlin/bubble/beego-app/controllers"
+	"github.com/wwgberlin/bubble/frontend/controllers"
 	"os"
 )
 

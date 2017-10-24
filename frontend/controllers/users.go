@@ -22,7 +22,7 @@ type (
 var db DB = DB([]User{
 	{
 		Id:           "wwgberlin",
-		PasswordHash: "$1$dlPL2MqE$oQmn16q49SqdmhenQuNgs1", // password is "hello"
+		PasswordHash: "$1$dlPL2MqE$oQmn16q49SqdmhenQuNgs1",
 	},
 })
 
@@ -74,7 +74,7 @@ func (c *UsersController) Post() {
 		Path string
 	}{
 		User: c.Data["username"],
-		Path: "http://beego_app:8080/images/" + filename,
+		Path: "http://frontend:8080/images/" + filename,
 	})
 	getPublisherChannel().Publish(b)
 }
