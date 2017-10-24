@@ -74,7 +74,7 @@ func (c *UsersController) Post() {
 		Path string
 	}{
 		User: c.Data["username"],
-		Path: "http://" + os.Getenv("HOSTNAME") + ":8080/images/" + filename,
+		Path: "http://beego_app:8080/images/" + filename,
 	})
 	getPublisherChannel().Publish(b)
 }
