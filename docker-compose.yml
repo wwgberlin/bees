@@ -19,12 +19,12 @@ services:
     volumes:
       - ./cv-api:/app
 
-  files_server:
-    image: files_server
+  beego_app:
+    image: beego_app
     ports:
-      - "8081:8080"
+      - "8082:8080"
     build:
-      context: ./files-server
+      context: ./beego-app
     volumes:
       - .:/go/src/github.com/wwgberlin/bubble
     depends_on:

@@ -6,8 +6,6 @@ import (
 	"github.com/wwgberlin/bubble/amqp"
 )
 
-type ()
-
 func main() {
 	conf := amqp.ConsumerChannelConfig{
 		ChannelConfig: amqp.ChannelConfig{
@@ -19,6 +17,6 @@ func main() {
 		},
 		PrefetchCount: 1,
 	}
-	amqp.NewConsumerAMQPChannel()
+	amqp.NewConsumerAMQPChannel(conf)
 
 }
