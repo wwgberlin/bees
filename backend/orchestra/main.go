@@ -2,7 +2,7 @@ package orchestra
 
 import (
 	"fmt"
-	"sort"
+	//"sort"
 	"time"
 )
 
@@ -57,16 +57,6 @@ On new user image:
 */
 
 func Process(productsCh chan ProductMessage, imageCh chan ImageMessage, stream ImageStream) {
-	select {
-	case newProduct := <-productsCh:
-		r, g, b := averageColor(FilterStream(stream.GetStream(newProduct.Path)))
-		products = append(products, Product{r: r, g: g, b: b})
-	case newImage := <-imageCh:
-		r, g, b := averageColor(FilterStream(stream.GetStream(newImage.Path)))
-		m := newProductMatcher(products, r, g, b)
-		sort.Sort(m)
-		matches = append(matches, m)
-	}
 }
 
 func averageColor(ch chan [][]uint8) (uint8, uint8, uint8) {
@@ -89,20 +79,5 @@ items will be pushed to the channel only if their values are not RGB values 0,0,
 * remember to close the channel when the channel the function is listening to closes
 */
 func FilterStream(ch chan [][]uint8) chan [][]uint8 {
-	newCh := make(chan [][]uint8)
-	go func() {
-		for arr := range ch {
-			newArr := [][]uint8{}
-			for i := range arr {
-				if arr[i][0] != 0 ||
-					arr[i][1] != 0 ||
-					arr[i][2] != 0 {
-					newArr = append(newArr, []uint8{arr[i][0], arr[i][1], arr[i][2]})
-				}
-			}
-			newCh <- newArr
-		}
-		close(newCh)
-	}()
-	return newCh
+	return nil
 }
