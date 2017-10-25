@@ -1,7 +1,6 @@
 package orchestra
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -37,10 +36,9 @@ func TestFilterStream(t *testing.T) {
 	ch <- [][]uint8{{1, 1, 1}, {2, 0, 2}, {0, 0, 0}, {1, 1, 0}}
 	ch <- [][]uint8{{0, 0, 0}, {2, 2, 2}, {0, 0, 0}, {1, 1, 1}}
 	close(ch)
-	arr1 := <-FilterStream(ch)
-	fmt.Println("arr1", arr1)
-	arr2 := <-FilterStream(ch)
-	fmt.Println("arr2", arr2)
+	retCh := FilterStream(ch)
+	arr1 := <-retCh
+	arr2 := <-retCh
 	if !reflect.DeepEqual(arr1, [][]uint8{{1, 1, 1}, {2, 0, 2}, {1, 1, 0}}) {
 		t.Fatal("incorrect values received from channel", arr1)
 	}

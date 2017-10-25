@@ -100,10 +100,8 @@ func FilterStream(ch chan [][]uint8) chan [][]uint8 {
 					newArr = append(newArr, []uint8{arr[i][0], arr[i][1], arr[i][2]})
 				}
 			}
-			fmt.Println("<<<<<<<", newArr)
 			newCh <- newArr
 		}
-		fmt.Println("closing")
 		close(newCh)
 	}()
 	return newCh
