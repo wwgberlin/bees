@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/abbot/go-http-auth"
@@ -80,18 +79,9 @@ func (c *UsersController) Post() {
 }
 
 func getPublisherChannel() amqp.PublisherChannel {
-	file, err := os.Open("../config/rabbitmq.json")
-	if err != nil {
-		panic(err)
-	}
-	decoder := json.NewDecoder(file)
-	configuration := amqp.ChannelConfig{}
-	err = decoder.Decode(&configuration)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
+	config := amqp.GetChannelConfig()
 	return amqp.NewPublisherChannel(amqp.PublisherChannelConfig{
-		ChannelConfig: configuration,
+		ChannelConfig: config,
 		Exchange:      "images",
 	})
 }

@@ -32,16 +32,18 @@ def detect_face_api():
 def detect_skin():
     img_path = request.args.get('image')
     image = url_to_image(img_path)
-    mask = skin_detector.process(image)
-    mask_rgb = cv2.bitwise_and(image, image, mask=mask)
+    cropped = face_detector.process(image)
+    mask = skin_detector.process(cropped)
+    mask_rgb = cv2.bitwise_and(cropped, cropped, mask=mask)
     return Response(cv2.imencode('.jpg', mask_rgb)[1].tostring(), mimetype='image/jpeg')
 
 @app.route('/api/skin/')
 def detect_skin_api():
     img_path = request.args.get('image')
     image = url_to_image(img_path)
-    mask = skin_detector.process(image)
-    mask_rgb = cv2.bitwise_and(image, image, mask=mask)
+    cropped = face_detector.process(image)
+    mask = skin_detector.process(cropped)
+    mask_rgb = cv2.bitwise_and(cropped, cropped, mask=mask)
     return Response(json.dumps(mask_rgb.tolist()), mimetype='application/json')
 
 app.run(host='0.0.0.0', port=8080)

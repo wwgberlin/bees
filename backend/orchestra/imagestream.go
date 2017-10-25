@@ -6,43 +6,27 @@ import (
 	"net/http"
 )
 
-type (
-	ImageMessage struct {
-		User interface{}
-		Path string
-	}
-)
-
-func filterStream(ch chan [][]uint8) chan [][]uint8 {
-	newCh := make(chan [][]uint8)
-	go func() {
-		for arr := range ch {
-			newArr := [][]uint8{}
-			for i := range arr {
-				if arr[i][0] != 0 ||
-					arr[i][1] != 0 ||
-					arr[i][2] != 0 {
-					newArr = append(newArr, arr[i])
-				}
-			}
-			newCh <- newArr
-		}
-		close(newCh)
-	}()
-	return newCh
+func NewImageStream() ImageStream {
+	return imageStream{}
 }
 
-func imageStream(newImage ImageMessage) chan [][]uint8 {
+type ImageStream interface {
+	GetStream(path string) chan [][]uint8
+}
+type imageStream struct {
+}
+
+func (s imageStream) GetStream(path string) chan [][]uint8 {
 	ch := make(chan [][]uint8)
 	go func() {
-		fetchImageFace(newImage, ch)
+		fetchImageSkinColor(path, ch)
 		close(ch)
 	}()
 	return ch
 }
 
-func fetchImageFace(newImage ImageMessage, ch chan [][]uint8) {
-	body := MustGet("http://cv_api:8080/api/skin/?image=" + newImage.Path)
+func fetchImageSkinColor(path string, ch chan [][]uint8) {
+	body := MustGet("http://cv_api:8080/api/skin/?image=" + path)
 	defer body.Close()
 	dec := json.NewDecoder(body)
 

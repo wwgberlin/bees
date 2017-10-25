@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"encoding/json"
 	"github.com/streadway/amqp"
+	"os"
 )
 
 type (
@@ -150,4 +152,18 @@ func (p *aMQPPublisherChannel) Publish(body []byte) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func GetChannelConfig() ChannelConfig {
+	file, err := os.Open("../config/rabbitmq.json")
+	if err != nil {
+		panic(err)
+	}
+	decoder := json.NewDecoder(file)
+	config := ChannelConfig{}
+	err = decoder.Decode(&config)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	return config
 }
