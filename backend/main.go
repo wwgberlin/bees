@@ -12,7 +12,6 @@ type (
 	conConsumer  struct {
 		consumeNewImagesFunc   imagesFunc
 		consumeNewProductsFunc productsFunc
-		products               chan orchestra.ProductMessage
 	}
 )
 
@@ -32,7 +31,6 @@ func main() {
 	}
 
 	c := conConsumer{
-		products:               products,
 		consumeNewImagesFunc:   imagesFunc(consumeNewImages),
 		consumeNewProductsFunc: productsFunc(consumeNewProducts(products)),
 	}

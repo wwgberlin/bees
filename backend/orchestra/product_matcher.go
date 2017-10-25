@@ -23,8 +23,8 @@ func (a ProductMatcher) Less(i, j int) bool {
 	left := a.products[i]
 	right := a.products[j]
 	r, g, b := a.r, a.g, a.b
-	return distance(r, g, b, left) < distance(r, g, b, right)
+	return left.distance(r, g, b) < right.distance(r, g, b)
 }
-func distance(r, g, b uint8, prod Product) float64 {
-	return math.Sqrt(float64((prod.b-b)*(prod.b-b) + (prod.r-r)*(prod.r-r) + (prod.r-g)*(prod.r-g)))
+func (p *Product) distance(r, g, b uint8) float64 {
+	return math.Sqrt(float64((p.r-r)*(p.r-r) + (p.g-g)*(p.g-g) + (p.b-b)*(p.b-b)))
 }
